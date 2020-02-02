@@ -140,6 +140,12 @@ that's just a guess.
 One last note here: regardless of the IDE used, every submitted project must
 still be compilable with cmake and make./
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+## Model Used for Path Planning.
+
+Simulator reads data from list every 0.02 seconds. So we need to create a list of points for X and Y which defines the path for ego vehicle and at each interval. Spacing of these points define velocity of ego vehicle. We get values for location of ego vehicle and other near by cars which is required to make correct maneuvers for safety of passenger. 
+From the data for nearby cars I have created a local copy for it and than created 2 lists which have values for nearest cars in each lane and their speed. We need this as when a car is there in front of us we need to change lane and knowing status of cars on that lane helps to make a correct decision for it. Distance for traffic car is given as it is while we need to calculate velocity from given X and Y components. 
+
+After filling above lists at each iterations we check for distance of car in front of ego vehicle. When we find that a car is there in font of us we need to check status of nearby lanes. If any lane is safe we switch to that lane. However, there are cases when all three lanes are not safe in that case we need to reduce speed of our vehicle which is same as speed of car in-front of ego vehicle so that we maintain a safe distance of 40 meters with them. While changing lane I am using spline library to get Y values from given X values for path generation. X values is more like D values while Y values are more like S values. For trajectory we need to make sure that we do not exceed lateral acceleration limits, this can be done by large value of longitudinal distance as compared to latitudinal value. For lane change latitudinal changes by 4 meters (middle of current lane to next lane) while longitudinal changes by 45 meters this gives us a ration of ~0.089 which is well within acceptable limits.
+
+As of now this model does not have any states or costs functions for selecting one lane over another. I started coding as per those requirements but due to time limit i can spare for this I have to go with current stateless and no cost function implementation. These are todo's part for this project.  
 

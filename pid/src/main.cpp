@@ -63,9 +63,11 @@ int main() {
            * NOTE: Feel free to play around with the throttle and speed.
            *   Maybe use another PID controller to control the speed!
            */
-          std::cout << "calling update error" << std::endl;
+          
           pid.UpdateError(cte);
+//		  std::cout << "now calling total error" << std::endl; 
 		  steer_value = pid.TotalError();
+	//	  std::cout << "steer_value " << steer_value << std::endl;
 		  if(steer_value > 1.0) steer_value = 1.0;
 		  if(steer_value < -1.0) steer_value = -1.0;
           // DEBUG

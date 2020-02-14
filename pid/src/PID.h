@@ -18,6 +18,7 @@ class PID {
   double Ki;
   double Kd;
 
+  bool twiddle_required;
   /**
    * Constructor
    */

@@ -23,6 +23,7 @@ void PID::Init(double Kp_, double Ki_, double Kd_) {
 	this->p_error = 0.0;
 	this->i_error = 0.0;
 	this->d_error = 0.0;
+	this->twiddle_required = false;
 }
 
 void PID::UpdateError(double cte) {
@@ -32,6 +33,7 @@ void PID::UpdateError(double cte) {
 	d_error = cte - p_error;
     p_error = cte;
 	i_error = cte + i_error;
+	# if 0
 	//std::cout << "init error " << p_error << "  " << i_error<< "  " << d_error << std::endl; 
 	double best_error = TotalError();
 	vector<double> dp = {1.0,1.0,1.0};
@@ -75,7 +77,9 @@ void PID::UpdateError(double cte) {
 	Kp = dp[0];
 	Ki = dp[1];
 	Kd = dp[2];
+	twiddle_required = true;
 //   std::cout << " update error "<< Kp << "  " << Ki << "  " << Kd << std::endl; 
+	#endif
 }
 
 double PID::TotalError() {
